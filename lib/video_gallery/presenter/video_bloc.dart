@@ -37,8 +37,8 @@ class VideoBloc extends Bloc<VideosEvent, VideosState> {
   List<VideoDisplayable> _getDisplayableVideo(List<VideoDto> response) {
     return response.map((video) {
       return VideoDisplayable(
-        name: video.name,
-        author: video.author,
+        name: video.tags,
+        author: video.user,
         videoUrl: video.videoUrl,
         imagePreviewUrl: video.imagePreviewUrl,
         duration: '00:${video.duration < 10 ? '0' : ''}${video.duration}',

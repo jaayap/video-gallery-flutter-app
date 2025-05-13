@@ -1,13 +1,13 @@
 class VideoDto {
-  final String name;
-  final String author;
+  final String tags;
+  final String user;
   final String videoUrl;
   final String imagePreviewUrl;
   final int duration;
 
   const VideoDto({
-    required this.name,
-    required this.author,
+    required this.tags,
+    required this.user,
     required this.videoUrl,
     required this.imagePreviewUrl,
     required this.duration,
@@ -15,8 +15,8 @@ class VideoDto {
 
   factory VideoDto.fromJson(Map<String, dynamic> json) {
     return VideoDto(
-      name: json['tags'] ?? '',
-      author: json['user'] ?? '',
+      tags: json['tags'] ?? '',
+      user: json['user'] ?? '',
       videoUrl: json['videos']['tiny']['url'] ?? '',
       imagePreviewUrl: json['videos']['tiny']['thumbnail'] ?? '',
       duration: json['duration'] ?? 0,

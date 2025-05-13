@@ -35,7 +35,7 @@ void main() {
 
     expect(videos, isA<List<VideoDto>>());
     expect(videos.length, 1);
-    expect(videos[0].name, contains("sea"));
+    expect(videos[0].tags, contains("sea"));
     expect(videos[0].videoUrl, startsWith("https://cdn.pixabay.com"));
     expect(videos[0].imagePreviewUrl, endsWith(".jpg"));
   });

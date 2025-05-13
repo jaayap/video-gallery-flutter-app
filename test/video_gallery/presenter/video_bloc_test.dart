@@ -19,15 +19,15 @@ void main() {
     mockRepository = MockVideoRepository();
     fakeVideosDto = [
       const VideoDto(
-        name: 'sea, beach, sunset',
-        author: 'author',
+        tags: 'sea, beach, sunset',
+        user: 'author',
         videoUrl: 'http://example.com/1.mp4',
         imagePreviewUrl: 'http://example.com/1.jpg',
         duration: 10,
       ),
       const VideoDto(
-        name: 'sea, beach, sunset',
-        author: 'author',
+        tags: 'sea, beach, sunset',
+        user: 'author',
         videoUrl: 'http://example.com/2.mp4',
         imagePreviewUrl: 'http://example.com/2.jpg',
         duration: 20,
