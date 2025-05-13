@@ -15,11 +15,13 @@ class VideoRepository extends IVideoRepository {
 
   @override
   Future<List<Video>> getVideos() async {
-    final uri = Uri.parse("https://pixabay.com/api/videos/?key=$pixabeyApiKey"); //TODO: add parameters 'q' to search with key word
+    final uri = Uri.parse(
+      "https://pixabay.com/api/videos/?key=$pixabeyApiKey",
+    ); //TODO: add parameters 'q' to search with key word
 
     try {
       http.Response response = await httpClient.get(uri);
-      if(response.statusCode == 200)  {
+      if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<dynamic> hits = data['hits'] ?? [];
         List<Video> videos = hits.map((json) => Video.fromJson(json)).toList();
