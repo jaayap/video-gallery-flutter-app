@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:video_gallery/video_gallery/video.dart';
-import 'package:video_gallery/video_gallery/video_repository.dart';
+import 'package:video_gallery/video_gallery/data/video_dto.dart';
+import 'package:video_gallery/video_gallery/data/video_repository.dart';
 
 void main() {
   const mockJson = '''
@@ -33,7 +33,7 @@ void main() {
     final service = VideoRepository(httpClient: client); // on injecte le client
     final videos = await service.getVideos();
 
-    expect(videos, isA<List<Video>>());
+    expect(videos, isA<List<VideoDto>>());
     expect(videos.length, 1);
     expect(videos[0].name, contains("sea"));
     expect(videos[0].videoUrl, startsWith("https://cdn.pixabay.com"));
@@ -49,7 +49,7 @@ void main() {
     final service = VideoRepository(httpClient: client); // on injecte le client
     final videos = await service.getVideos(input: 'rabbit cute');
 
-    expect(videos, isA<List<Video>>());
+    expect(videos, isA<List<VideoDto>>());
     expect(videos.length, 1);
   });
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:video_gallery/video_gallery/presenter/video_state.dart';
 import 'package:video_gallery/video_gallery/screen/custom_search_bar.dart';
 import 'package:video_gallery/video_gallery/screen/video_grid_view.dart';
 import 'package:video_gallery/video_gallery/screen/video_list_view.dart';
-import 'package:video_gallery/video_gallery/video_event.dart';
-import 'package:video_gallery/video_gallery/video_repository.dart';
-import 'package:video_gallery/video_gallery/videos_bloc.dart';
+import 'package:video_gallery/video_gallery/presenter/video_event.dart';
+import 'package:video_gallery/video_gallery/data/video_repository.dart';
+import 'package:video_gallery/video_gallery/presenter/video_bloc.dart';
 
 class VideoGalleryPage extends StatefulWidget {
   const VideoGalleryPage({super.key});
@@ -35,8 +36,8 @@ class _VideoGalleryPageState extends State<VideoGalleryPage> {
               child: BlocProvider(
                 create:
                     (context) =>
-                        VideosBloc(repository: VideoRepository(httpClient: http.Client()))..add(FetchVideosEvent()),
-                child: BlocBuilder<VideosBloc, VideosState>(
+                        VideoBloc(repository: VideoRepository(httpClient: http.Client()))..add(FetchVideosEvent()),
+                child: BlocBuilder<VideoBloc, VideosState>(
                   builder: (context, state) {
                     return Column(
                       spacing: 16,
@@ -44,7 +45,7 @@ class _VideoGalleryPageState extends State<VideoGalleryPage> {
                         CustomSearchBar(
                           controller: _searchController,
                           onEditingComplete: () {
-                            context.read<VideosBloc>().add(SearchVideosEvent(_searchController.text));
+                            context.read<VideoBloc>().add(SearchVideosEvent(_searchController.text));
                             FocusScope.of(context).unfocus();
                           },
                         ),

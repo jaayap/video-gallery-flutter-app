@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:video_gallery/video_gallery/video.dart';
+import 'package:video_gallery/video_gallery/presenter/video_displayable.dart';
 import 'package:video_gallery/video_gallery/screen/play_button.dart';
 import 'package:video_gallery/video_player/video_player_page.dart';
 
 class VideosGridView extends StatelessWidget {
-  final List<Video> videos;
+  final List<VideoDisplayable> videos;
 
   const VideosGridView({super.key, required this.videos});
 
@@ -32,7 +32,7 @@ class VideoItem extends StatelessWidget {
   final String videoUrl;
   final String imagePreviewUrl;
   final String title;
-  final int duration;
+  final String duration;
 
   const VideoItem({
     super.key,
@@ -82,7 +82,7 @@ class VideoItem extends StatelessWidget {
 class Duration extends StatelessWidget {
   const Duration({super.key, required this.duration});
 
-  final int duration;
+  final String duration;
 
   @override
   Widget build(BuildContext context) {
@@ -91,10 +91,7 @@ class Duration extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(6)),
-        child: Text(
-          '00:${duration < 10 ? '0' : ''}$duration',
-          style: const TextStyle(color: Colors.white, fontSize: 12),
-        ),
+        child: Text(duration, style: const TextStyle(color: Colors.white, fontSize: 12)),
       ),
     );
   }

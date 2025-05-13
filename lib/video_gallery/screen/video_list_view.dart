@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:video_gallery/video_gallery/video.dart';
+import 'package:video_gallery/video_gallery/presenter/video_displayable.dart';
 import 'package:video_gallery/video_gallery/screen/play_button.dart';
 import 'package:video_gallery/video_player/video_player_page.dart';
 
 class VideoListView extends StatelessWidget {
-  final List<Video> videos;
+  final List<VideoDisplayable> videos;
 
   const VideoListView({super.key, required this.videos});
 
@@ -37,7 +37,7 @@ class VideoListView extends StatelessWidget {
                               child: Image.network(video.imagePreviewUrl, fit: BoxFit.cover, height: 30),
                             ),
                             Text(
-                              '00:${video.duration < 10 ? '0' : ''}${video.duration}',
+                              video.duration,
                               style: const TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500),
                             ),
                           ],

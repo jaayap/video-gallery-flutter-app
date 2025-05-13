@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:video_gallery/keys/key.dart';
-import 'package:video_gallery/video_gallery/video.dart';
+import 'package:video_gallery/video_gallery/data/video_dto.dart';
 
 abstract class IVideoRepository {
-  Future<List<Video>> getVideos({String? input});
+  Future<List<VideoDto>> getVideos({String? input});
 }
 
 class VideoRepository extends IVideoRepository {
@@ -14,7 +14,7 @@ class VideoRepository extends IVideoRepository {
   VideoRepository({required this.httpClient});
 
   @override
-  Future<List<Video>> getVideos({String? input}) async {
+  Future<List<VideoDto>> getVideos({String? input}) async {
     final formattedInput = input?.trim().replaceAll(RegExp(r'\s+'), '+') ?? '';
 
     final uri = Uri.parse("https://pixabay.com/api/videos/?key=$pixabeyApiKey&q=$formattedInput&lang=fr");
@@ -24,7 +24,7 @@ class VideoRepository extends IVideoRepository {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         final List<dynamic> hits = data['hits'] ?? [];
-        List<Video> videos = hits.map((json) => Video.fromJson(json)).toList();
+        List<VideoDto> videos = hits.map((json) => VideoDto.fromJson(json)).toList();
         return videos;
       } else {
         throw Exception("Error, status code != 200");
