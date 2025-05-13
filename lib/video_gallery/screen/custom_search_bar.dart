@@ -21,6 +21,7 @@ class CustomSearchBar extends StatelessWidget {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     controller.clear();
+                    onEditingComplete.call();
                   },
                 )
                 : null,

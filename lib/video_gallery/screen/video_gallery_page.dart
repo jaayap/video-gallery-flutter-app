@@ -43,8 +43,10 @@ class _VideoGalleryPageState extends State<VideoGalleryPage> {
                       children: [
                         CustomSearchBar(
                           controller: _searchController,
-                          onEditingComplete:
-                              () => context.read<VideosBloc>().add(SearchVideosEvent(_searchController.text)),
+                          onEditingComplete: () {
+                            context.read<VideosBloc>().add(SearchVideosEvent(_searchController.text));
+                            FocusScope.of(context).unfocus();
+                          },
                         ),
                         ViewToggle(
                           isGrid: isGridView,
