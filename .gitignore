@@ -20,6 +20,7 @@
 /bin/mingit/
 /packages/flutter/coverage/
 analysis_benchmark.json
+/lib/keys/
 
 # packages file containing multi-root paths
 .packages.generated
