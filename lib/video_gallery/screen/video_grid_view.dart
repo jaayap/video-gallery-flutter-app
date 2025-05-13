@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_gallery/video_gallery/video.dart';
 import 'package:video_gallery/video_gallery/screen/play_button.dart';
+import 'package:video_gallery/video_player/video_player_page.dart';
 
 class VideosGridView extends StatelessWidget {
   final List<Video> videos;
@@ -43,32 +44,42 @@ class VideoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(imagePreviewUrl, fit: BoxFit.cover),
-              ),
-              PlayButton(),
-              Align(alignment: Alignment.bottomRight, child: Duration(duration: duration)),
-            ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => VideoPlayerPage(videoUrl: videoUrl),
           ),
-        ),
-        const SizedBox(height: 8),
-        // Titre
-        Text(
-          title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, height: 1.0),
-        ),
-      ],
+        );
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AspectRatio(
+            aspectRatio: 16 / 9,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(imagePreviewUrl, fit: BoxFit.cover),
+                ),
+                PlayButton(),
+                Align(alignment: Alignment.bottomRight, child: Duration(duration: duration)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Titre
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold, height: 1.0),
+          ),
+        ],
+      ),
     );
   }
 }
