@@ -46,12 +46,7 @@ class VideoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => VideoPlayerPage(videoUrl: videoUrl),
-          ),
-        );
+        Navigator.push(context, MaterialPageRoute(builder: (_) => VideoPlayerPage(videoUrl: videoUrl)));
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -96,7 +91,10 @@ class Duration extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
         decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(6)),
-        child: Text('00:$duration', style: const TextStyle(color: Colors.white, fontSize: 12)),
+        child: Text(
+          '00:${duration < 10 ? '0' : ''}$duration',
+          style: const TextStyle(color: Colors.white, fontSize: 12),
+        ),
       ),
     );
   }

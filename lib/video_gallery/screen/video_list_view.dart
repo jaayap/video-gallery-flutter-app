@@ -17,12 +17,7 @@ class VideoListView extends StatelessWidget {
             videos.map((video) {
               return InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => VideoPlayerPage(videoUrl: video.videoUrl),
-                    ),
-                  );
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => VideoPlayerPage(videoUrl: video.videoUrl)));
                 },
                 child: DecoratedBox(
                   decoration: BoxDecoration(
@@ -33,11 +28,33 @@ class VideoListView extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
+                      spacing: 8,
                       children: [
+                        Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: Image.network(video.imagePreviewUrl, fit: BoxFit.cover, height: 30),
+                            ),
+                            Text(
+                              '00:${video.duration < 10 ? '0' : ''}${video.duration}',
+                              style: const TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('tags: ${video.name}', maxLines: 3, overflow: TextOverflow.ellipsis),
+                              Text(
+                                'auteur: ${video.author}',
+                                style: const TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
                         PlayButton(),
-                        SizedBox(width: 8),
-                        Expanded(child: Text(video.name)),
-                        Text('00:${video.duration}'),
                       ],
                     ),
                   ),
