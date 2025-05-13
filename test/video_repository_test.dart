@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
-import 'package:video_gallery/video.dart';
-import 'package:video_gallery/video_repository.dart';
+import 'package:video_gallery/video_gallery/video.dart';
+import 'package:video_gallery/video_gallery/video_repository.dart';
 
 void main() {
   test('returns list of videos if the http call completes successfully', () async {

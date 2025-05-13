@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:video_gallery/video_gallery/video_grid_view.dart';
-import 'package:video_gallery/video_gallery/video_list_view.dart';
-import 'package:video_gallery/video_repository.dart';
-import 'package:video_gallery/videos_bloc.dart';
+import 'package:video_gallery/video_gallery/screen/custom_search_bar.dart';
+import 'package:video_gallery/video_gallery/screen/video_grid_view.dart';
+import 'package:video_gallery/video_gallery/screen/video_list_view.dart';
+import 'package:video_gallery/video_gallery/video_event.dart';
+import 'package:video_gallery/video_gallery/video_repository.dart';
+import 'package:video_gallery/video_gallery/videos_bloc.dart';
 
 class VideoGalleryPage extends StatefulWidget {
   const VideoGalleryPage({super.key});
@@ -15,6 +17,7 @@ class VideoGalleryPage extends StatefulWidget {
 
 class _VideoGalleryPageState extends State<VideoGalleryPage> {
   bool isGridView = true;
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +31,6 @@ class _VideoGalleryPageState extends State<VideoGalleryPage> {
         child: Column(
           spacing: 16,
           children: [
-            ViewToggle(
-              isGrid: isGridView,
-              onChanged: (value) {
-                setState(() => isGridView = value);
-              },
-            ),
             Expanded(
               child: BlocProvider(
                 create:
@@ -41,14 +38,32 @@ class _VideoGalleryPageState extends State<VideoGalleryPage> {
                         VideosBloc(repository: VideoRepository(httpClient: http.Client()))..add(FetchVideosEvent()),
                 child: BlocBuilder<VideosBloc, VideosState>(
                   builder: (context, state) {
-                    if (state.status != StateStatus.loaded) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return state.videos != null
-                        ? isGridView
-                            ? VideosGridView(videos: state.videos!)
-                            : VideoListView(videos: state.videos!)
-                        : SizedBox();
+                    return Column(
+                      spacing: 16,
+                      children: [
+                        CustomSearchBar(
+                          controller: _searchController,
+                          onEditingComplete:
+                              () => context.read<VideosBloc>().add(SearchVideosEvent(_searchController.text)),
+                        ),
+                        ViewToggle(
+                          isGrid: isGridView,
+                          onChanged: (value) {
+                            setState(() => isGridView = value);
+                          },
+                        ),
+                        (state.status != StateStatus.loaded)
+                            ? const Center(child: CircularProgressIndicator())
+                            : Expanded(
+                              child:
+                                  state.videos != null
+                                      ? isGridView
+                                          ? VideosGridView(videos: state.videos!)
+                                          : VideoListView(videos: state.videos!)
+                                      : SizedBox(),
+                            ),
+                      ],
+                    );
                   },
                 ),
               ),

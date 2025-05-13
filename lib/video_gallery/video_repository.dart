@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:video_gallery/keys/key.dart';
-import 'package:video_gallery/video.dart';
+import 'package:video_gallery/video_gallery/video.dart';
 
 abstract class IVideoRepository {
-  Future<List<Video>> getVideos();
+  Future<List<Video>> getVideos({String? input});
 }
 
 class VideoRepository extends IVideoRepository {
@@ -14,10 +14,10 @@ class VideoRepository extends IVideoRepository {
   VideoRepository({required this.httpClient});
 
   @override
-  Future<List<Video>> getVideos() async {
-    final uri = Uri.parse(
-      "https://pixabay.com/api/videos/?key=$pixabeyApiKey",
-    ); //TODO: add parameters 'q' to search with key word
+  Future<List<Video>> getVideos({String? input}) async {
+    final formattedInput = input?.trim().replaceAll(RegExp(r'\s+'), '+') ?? '';
+
+    final uri = Uri.parse("https://pixabay.com/api/videos/?key=$pixabeyApiKey&q=$formattedInput&lang=fr");
 
     try {
       http.Response response = await httpClient.get(uri);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_gallery/video_gallery/video_gallery_page.dart';
+import 'package:video_gallery/video_gallery/screen/video_gallery_page.dart';
 
 void main() {
   runApp(const MyApp());

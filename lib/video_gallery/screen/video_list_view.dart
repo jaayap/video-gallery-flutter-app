@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:video_gallery/video.dart';
-import 'package:video_gallery/video_gallery/play_button.dart';
+import 'package:video_gallery/video_gallery/video.dart';
+import 'package:video_gallery/video_gallery/screen/play_button.dart';
 
 class VideoListView extends StatelessWidget {
   final List<Video> videos;
